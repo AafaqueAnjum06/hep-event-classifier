@@ -59,7 +59,7 @@ def train_and_tune_models(X_train, y_train, X_val, y_val, save_dir: str = "model
     os.makedirs(save_dir, exist_ok=True)
 
     for name, config in MODEL_CONFIGS.items():
-        print(f"\n🔍 Training {name} with GridSearchCV...")
+        print(f"\nTraining {name} with GridSearchCV...")
         grid = GridSearchCV(
             estimator=config["model"],
             param_grid=config["params"],
@@ -86,6 +86,6 @@ def train_and_tune_models(X_train, y_train, X_val, y_val, save_dir: str = "model
     # Save best model
     model_path = os.path.join(save_dir, f"best_model_{best_name}.pkl")
     joblib.dump(best_model, model_path)
-    print(f"\n✅ Best Model: {best_name} saved at {model_path} (Val Acc: {best_score:.4f})")
+    print(f"\nBest Model: {best_name} saved at {model_path} (Val Acc: {best_score:.4f})")
 
     return best_model, best_name, best_score

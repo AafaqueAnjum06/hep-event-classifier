@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 
 def load_data(file_path: str, nrows: int = None):
@@ -52,7 +52,11 @@ def split_features_labels(df: pd.DataFrame, target_col: str = "label"):
         raise ValueError(f"Target column '{target_col}' not found in dataset")
 
     X = df.drop(columns=[target_col]).values
-    y = df[target_col].values
+    y = df[target_col].values 
+    if np.issubdtype(y.dtype, np.floating):
+        y = y.round().astype(int)  # round floats to nearest integer
+    le = LabelEncoder()
+    y = le.fit_transform(y)
     return X, y
 
 
@@ -82,7 +86,7 @@ def preprocess_data(file_path: str, target_col: str = "label", test_size: float 
 
     # Split train/test
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state, stratify=y
+        X, y, test_size=test_size, random_state=random_state
     )
 
     # Standardize features
