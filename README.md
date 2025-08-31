@@ -85,6 +85,7 @@ pip install -r requirements.txt
 ```bash
 python src/pipeline.py
 ```
+This runs the entire pipeline using default settings and example data in `data/`.
 
 **Optional arguments** (modify in `pipeline.py` or CLI-ready later):
 
